@@ -79,5 +79,26 @@ public class MockController {
         return coverage.map(value -> ResponseEntity.ok(modelMapper.map(value, CoverageDto.class)))
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
+
+    @GetMapping("/attentions")
+    public ResponseEntity<List<AttentionDto>> getAllAttentions() {
+        List<Attention> attentions = attentionRepository.findAll();
+
+        List<AttentionDto> attentionDtos = attentions.stream()
+                .map(att -> {
+                    AttentionDto dto = modelMapper.map(att, AttentionDto.class);
+                    if (att.getPractices() != null) {
+                        dto.setPractices(
+                                att.getPractices().stream()
+                                        .map(p -> modelMapper.map(p, PracticeDto.class))
+                                        .collect(Collectors.toList())
+                        );
+                    }
+                    return dto;
+                })
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(attentionDtos);
+    }
 }
 
