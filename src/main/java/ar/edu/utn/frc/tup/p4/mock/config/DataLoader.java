@@ -125,7 +125,8 @@ public class DataLoader implements CommandLineRunner {
             attention.setPractices(List.of(practice));
 
             LocalDateTime fecha = LocalDateTime.of(year, month, random.nextInt(28) + 1, 10, 0);
-            attention.setProtocolName(info.name + " (" + fecha.toLocalDate() + ")");
+            attention.setAttentionDate(fecha.toLocalDate());
+            attention.setProtocolName(info.name);
 
             attentionRepository.save(attention);
         }
