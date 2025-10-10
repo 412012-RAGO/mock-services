@@ -7,8 +7,9 @@ import java.util.List;
 public class AttentionDto {
     private Long attentionId;
     private Long patientId;
-    private String protocol;
     private Long coverageId;
+    private Integer protocolId;
+    private String protocolName;
     private List<PracticeDto> practices;
 }
 

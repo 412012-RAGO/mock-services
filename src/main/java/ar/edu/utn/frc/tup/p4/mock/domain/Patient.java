@@ -1,9 +1,9 @@
 package ar.edu.utn.frc.tup.p4.mock.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
+
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "patient")
@@ -12,5 +12,11 @@ public class Patient {
     @Id
     private Long patientId;
     private String patientName;
+    private String lastName;
     private Integer dni;
+    private LocalDate birthDate;
+    private String gender;
+    private String status;
+    private Boolean isActive;
+
 }

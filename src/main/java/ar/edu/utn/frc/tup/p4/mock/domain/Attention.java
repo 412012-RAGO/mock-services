@@ -11,7 +11,8 @@ public class Attention {
     @Id
     private Long attentionId;
     private Long patientId;
-    private String protocol;
+    private Integer protocolId;
+    private String protocolName;
     private Long coverageId;
 
     @OneToMany(cascade = CascadeType.ALL)
