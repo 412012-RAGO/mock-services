@@ -13,11 +13,13 @@ public class Attention {
     @Id
     private Long attentionId;
     private Long patientId;
-    private Integer protocolId;
-    private String protocolName;
-    private Long coverageId;
-    private LocalDate attentionDate;
+    private Long insurerId;
+    private Long planId;
+    private Long branchId;
+    private String protocolNumber;
+    private LocalDate date;
 
     @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "attention_id")
     private List<Practice> practices;
 }

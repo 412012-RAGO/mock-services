@@ -7,9 +7,6 @@ public class PracticeDto {
     private Long practiceId;
     private String coverageType;
     private String practiceDescription;
-    private Integer quantity;
-    private Double unitPrice;
-    private Double coverage;
-    private Double coinsurance;
+    private CoverageDto coverage;
 }
 

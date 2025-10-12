@@ -9,8 +9,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -100,5 +102,26 @@ public class MockController {
 
         return ResponseEntity.ok(attentionDtos);
     }
+    @GetMapping("/attentions/insurer/{insurerId}")
+    public ResponseEntity<List<AttentionDto>> getAllInsurerAttention(@PathVariable Long insurerId,
+                                                                     @RequestParam Integer month,
+                                                                     @RequestParam Integer year) {
+        LocalDate startDate = LocalDate.of(year, month, 1);
+        LocalDate endDate = startDate.withDayOfMonth(startDate.lengthOfMonth());
+        List<AttentionDto> attentions = attentionRepository.findAllByInsurerIdAndDateBetween(insurerId, startDate, endDate)
+                .stream()
+                .map(att -> {
+                    AttentionDto dto = modelMapper.map(att, AttentionDto.class);
+                    if (att.getPractices() != null) {
+                        dto.setPractices(
+                                att.getPractices().stream()
+                                        .map(p -> modelMapper.map(p, PracticeDto.class))
+                                        .collect(Collectors.toList())
+                        );
+                    }
+                    return dto;
+                })
+                .collect(Collectors.toList());
+        return  ResponseEntity.ok(attentions);
+    }
 }
-
